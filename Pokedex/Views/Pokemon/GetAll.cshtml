@@ -1,0 +1,59 @@
+﻿@model ML.Pokemon
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="text-center">
+<h1>Pokemones</h1>
+</div>
+<div class="container">
+    <section>
+
+        <h1 class="text-center">Lista de coctel</h1>
+        <p>
+            En este modulo puedes visualizar a los cocteles,<br />
+        </p>
+    </section>
+    <hr />
+    <section>
+        @if (Model.Pokemons == null)
+        {
+            <div class="row">
+                <div class="alert alert-danger" role="alert">
+                    @ViewBag.Message
+                </div>
+            </div>
+        }
+        else
+        {
+   <div class="row">
+         @foreach (ML.Pokemon pokemon in Model.Pokemons)
+         {
+
+   <div class="card text-white  bg-dark border-success mb-3 border-4" style="width: 18rem;">
+    @if (pokemon.Sprites.front_default == null || pokemon.Sprites.front_default == " ")
+                {
+                 <img src="/images/PSI.png" width="250px" height="250px"/>
+                }
+                else
+                {
+                   <img id="Img" src="@pokemon.Sprites.front_default" style="width:250px ; height:250px" />
+                }
+  <div class="card-body">
+    <h5 class="card-title">@pokemon.Name</h5>
+    <p class="card-text">@pokemon.Id</p>
+        <p class="card-text">Ingrediente:</p>
+                          
+        </div>
+      </div>
+     }
+</div>
+
+           
+
+        }
+
+
+
+    </section>
+</div>
