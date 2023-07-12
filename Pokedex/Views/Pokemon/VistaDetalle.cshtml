@@ -1,0 +1,44 @@
+﻿@model ML.Pokemon
+<div class="modal fade" id="ModalUpdate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h4 class="modal-title" id="ModalEmpleado">Actualizar Empleados</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="row">
+                
+               @foreach (ML.Pokemon pokemon in Model.Pokemons)
+               {
+                   <div class="col-md-3">
+                     @if (pokemon.Sprites.front_default == null || pokemon.Sprites.front_default == " ")
+                     {
+                        <img  class="card-img-top"src="/images/PSI.png" alt="Card image cap"/>
+                     }
+                     else
+                     {
+                        <img class="card-img-top bg-opacity-75" id="Img" src="@pokemon.Sprites.front_default"alt="Card image cap" />
+                     }
+                    <div class="card-body">
+                       <h5 class="card-title text-center">@pokemon.Name</h5>
+                       <p class="card-text">No:@pokemon.Id</p> 
+                       
+                       <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="CerrarModal()">Cancelar</button>
+                        </div>
+                        </div>
+                  </div>
+                  
+               }
+            </div>
+                           
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="CerrarModal()">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>

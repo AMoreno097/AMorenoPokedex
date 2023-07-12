@@ -3,16 +3,51 @@
     ViewData["Title"] = "GetAll";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="text-center">
+<head>
+   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="~/js/site.js"></script>
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> 
+</head>
+<div class="text-center text-info">
 <h1>Pokemones</h1>
 </div>
 <div class="container">
     <section>
+        
+        <div>
 
-        <h1 class="text-center">Lista de coctel</h1>
-        <p>
-            En este modulo puedes visualizar a los cocteles,<br />
-        </p>
+          <nav class="nav">
+              <ul class="nav-list">
+                  <li class="nav-item"><button class="btn btn-sm todos" id="Ver-Todos"> Ver Todos</button></li>
+                  <li class="nav-item"><button class="btn btn-sm normal" id="normal"> Normal </button></li>
+                  <li class="nav-item"><button class="btn btn-sm fighting" id="fighting"> Fighting </button></li>
+                  <li class="nav-item"><button class="btn btn-sm flying" id="flying"> Flying </button></li>
+                  <li class="nav-item"><button class="btn btn-sm poison" id="poison"> poison </button></li>
+                  <li class="nav-item"><button class="btn btn-sm ground" id="ground"> ground </button></li>
+                  <li class="nav-item"><button class="btn btn-sm rock" id="rock"> rock </button></li>
+                  <li class="nav-item"><button class="btn btn-sm bug" id="bug"> bug </button></li>
+                  <li class="nav-item"><button class="btn btn-sm ghost" id="ghost"> ghost </button></li>
+                  <li class="nav-item"><button class="btn btn-sm steel" id="steel"> steel </button></li>
+                  <li class="nav-item"><button class="btn btn-sm fire" id="fire"> Fire </button></li>
+                  <li class="nav-item"><button class="btn btn-sm water" id="water"> water </button></li>
+                  <li class="nav-item"><button class="btn btn-sm grass" id="grass"> grass </button></li>
+                  <li class="nav-item"><button class="btn btn-sm electric" id="electric"> electric </button></li>
+                  <li class="nav-item"><button class="btn btn-sm psychic" id="psychic"> psychic </button></li>
+                  <li class="nav-item"><button class="btn btn-sm ice" id="ice"> ice </button></li>
+                  <li class="nav-item"><button class="btn btn-sm dragon" id="dragon"> dragon </button></li>
+                  <li class="nav-item"><button class="btn btn-sm dark" id="dark"> dark </button></li>
+                  <li class="nav-item"><button class="btn btn-sm fairy" id="fairy"> fairy </button></li>       
+              
+              
+              </ul>
+
+          </nav>
+           @using (Html.BeginForm("GetAll", "Pokemon", FormMethod.Get, new { enctype = "multipart/form-data" }))
+             {
+          <input class="form-control" style="width: 300px;float:right; margin-right: 3%;" name="Nombre" placeholder="Nombre o ID" value="" autocomplete="off" />
+             }
+         </div>
+           <br />
     </section>
     <hr />
     <section>
@@ -26,34 +61,75 @@
         }
         else
         {
-   <div class="row">
-         @foreach (ML.Pokemon pokemon in Model.Pokemons)
-         {
-
-   <div class="card text-white  bg-dark border-success mb-3 border-4" style="width: 18rem;">
-    @if (pokemon.Sprites.front_default == null || pokemon.Sprites.front_default == " ")
-                {
-                 <img src="/images/PSI.png" width="250px" height="250px"/>
-                }
-                else
-                {
-                   <img id="Img" src="@pokemon.Sprites.front_default" style="width:250px ; height:250px" />
-                }
-  <div class="card-body">
-    <h5 class="card-title">@pokemon.Name</h5>
-    <p class="card-text">@pokemon.Id</p>
-        <p class="card-text">Ingrediente:</p>
-                          
-        </div>
-      </div>
-     }
-</div>
-
-           
-
+            <div class="row">
+                
+               @foreach (ML.Pokemon pokemon in Model.Pokemons)
+               {
+                   <div class="col-md-3">
+                  <div class="card border-warning border-3" style="width: 18rem; margin-bottom: 2rem" onclick="VistaDetalle">
+                     @if (pokemon.Sprites.front_default == null || pokemon.Sprites.front_default == " ")
+                     {
+                        <img  class="card-img-top"src="/images/PSI.png" alt="Card image cap"/>
+                     }
+                     else
+                     {
+                        <img class="card-img-top bg-opacity-75" id="Img" src="@pokemon.Sprites.front_default"alt="Card image cap" />
+                     }
+                    <div class="card-body">
+                       <h5 class="card-title text-center">@pokemon.Name</h5>
+                       <p class="card-text">#00 @pokemon.Id</p> 
+                       
+                     
+                       <a href="@Url.Action("VistaDetalle", "Pokemon", new { Name = pokemon.Name})" class="btn btn-primary" onclick="AbrirModal()">Detalle</a>
+                    </div>
+                  </div>
+                  </div>
+               }
+            </div>
         }
+         <div class="modal fade" id="ModalUpdate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h4 class="modal-title" id="ModalEmpleado">Actualizar Empleados</h4>
+                        </div>
 
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label> IdEmpleado</label>
+                                    <input type="text" class="form-control" id="txtIdEmpleado" placeholder="IdEmpleado" disabled="disabled" />
+                                </div>
+                                <div class="form-group">
+                                    <label> Numero de Nomina</label>
+                                    <input type="text" class="form-control" id="txtNumeroNomina" placeholder="NumeroNomina" />
+                                </div>
+                                <div class="form-group">
+                                    <label> Nombre</label>
+                                    <input type="text" class="form-control" id="txtNombre" placeholder="Nombre" />
+                                </div>
+                                <div class="form-group">
+                                    <label> Apellido Paterno</label>
+                                    <input type="text" class="form-control" id="txtApellidoPaterno" placeholder="ApellidoPaterno" />
+                                </div>
+                                <div class="form-group">
+                                    <label> Apellido Materno</label>
+                                    <input type="text" class="form-control" id="txtApellidoMaterno" placeholder="ApellidoMaterno" />
+                                </div>
+                                <div class="sidebar-box" style="display:block">
+                                    <label> Estado</label>
+                                    <select class="form-control" id="ddlEstados">
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
 
-
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="CerrarModal()">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+         </div>
     </section>
 </div>
