@@ -65,20 +65,30 @@ namespace Pokedex.Controllers
         {
             ML.Pokemon pokemon = new ML.Pokemon();
             pokemon.Pokemons = new List<object>();
-          
+            pokemon.stats = new List<object>();
+            pokemon.types = new List<object>();
+            
 
 
             using (var client = new HttpClient())
             {
+           
                 client.BaseAddress = new Uri("https://pokeapi.co/api/v2/pokemon/");
                 var responseTask = client.GetAsync(Name);
                 responseTask.Wait();
                 var resultAPI = responseTask.Result;
                 if (resultAPI.IsSuccessStatusCode)
                 {
-                    var readTask = resultAPI.Content.ReadAsAsync<ML.Pokemon>();
+                    var readTask = resultAPI.Content.ReadAsAsync<dynamic>();
                     readTask.Wait();
-                
+                    foreach (dynamic resultItem in readTask.Result.drinks)
+                    {
+                        //ML.Coctel resultItemList = Newtonsoft.Json.JsonConvert.DeserializeObject<ML.Coctel>(resultItem);
+                        ML.Coctel resultItemList = new ML.Coctel();
+                        resultItemList.strDrink = resultItem.strDrink;
+                        resultcoctel.Objects.Add(resultItemList);
+                    }
+
                 }
                 else
                 {

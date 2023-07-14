@@ -77,7 +77,9 @@
                      }
                     <div class="card-body">
                        <h5 class="card-title text-center">@pokemon.Name</h5>
-                       <p class="card-text">#00 @pokemon.Id</p> 
+                       <p class="card-text">#00+@pokemon.Id</p> 
+                       <p>@pokemon.stat.base_stat</p>
+
                        
                      
                        <a href="@Url.Action("VistaDetalle", "Pokemon", new { Name = pokemon.Name})" class="btn btn-primary" onclick="AbrirModal()">Detalle</a>
