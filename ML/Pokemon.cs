@@ -5,11 +5,9 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public Sprites Sprites { get; set; }
-        public List<object> stats { get; set; }
-        public List<object> types { get; set; }
         public List<object> Pokemons { get; set; }
-        public stats stat { get; set; }
-        public types type { get; set; }
+        public stats stats { get; set; }
+        public types types { get; set; }
     }
     public class Sprites
     {
@@ -20,6 +18,8 @@
     {
         public int base_stat { get; set; }
         public int effort { get; set; }
+        public string name { get; set; }
+        public List<object> Stats { get; set; }
         public Stat Stat { get; set; }
     }
     public class Stat

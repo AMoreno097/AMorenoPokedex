@@ -77,8 +77,8 @@
                      }
                     <div class="card-body">
                        <h5 class="card-title text-center">@pokemon.Name</h5>
-                       <p class="card-text">#00+@pokemon.Id</p> 
-                       <p>@pokemon.stat.base_stat</p>
+                       <p class="card-text">'#00+@pokemon.Id'</p> 
+                       
 
                        
                      
@@ -89,49 +89,7 @@
                }
             </div>
         }
-         <div class="modal fade" id="ModalUpdate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">×</button>
-                            <h4 class="modal-title" id="ModalEmpleado">Actualizar Empleados</h4>
-                        </div>
-
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    <label> IdEmpleado</label>
-                                    <input type="text" class="form-control" id="txtIdEmpleado" placeholder="IdEmpleado" disabled="disabled" />
-                                </div>
-                                <div class="form-group">
-                                    <label> Numero de Nomina</label>
-                                    <input type="text" class="form-control" id="txtNumeroNomina" placeholder="NumeroNomina" />
-                                </div>
-                                <div class="form-group">
-                                    <label> Nombre</label>
-                                    <input type="text" class="form-control" id="txtNombre" placeholder="Nombre" />
-                                </div>
-                                <div class="form-group">
-                                    <label> Apellido Paterno</label>
-                                    <input type="text" class="form-control" id="txtApellidoPaterno" placeholder="ApellidoPaterno" />
-                                </div>
-                                <div class="form-group">
-                                    <label> Apellido Materno</label>
-                                    <input type="text" class="form-control" id="txtApellidoMaterno" placeholder="ApellidoMaterno" />
-                                </div>
-                                <div class="sidebar-box" style="display:block">
-                                    <label> Estado</label>
-                                    <select class="form-control" id="ddlEstados">
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="CerrarModal()">Cancelar</button>
-                        </div>
-                    </div>
-                </div>
-         </div>
     </section>
 </div>
+          
+

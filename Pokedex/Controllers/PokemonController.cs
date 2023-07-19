@@ -8,9 +8,9 @@ namespace Pokedex.Controllers
     {
         public IActionResult GetAll(string Nombre)
         {
-            if( Nombre == null) { 
-            ML.Pokemon pokemon = new ML.Pokemon();
-            pokemon.Pokemons = new List<object>();
+            if( Nombre == null) {
+                ML.Result resultPokemons = new ML.Result();
+                resultPokemons.Objects = new List<object>();
             for (int i = 1; i <= 40; i++) { 
                 string num = i.ToString();
                 using (var client = new HttpClient())
@@ -21,19 +21,27 @@ namespace Pokedex.Controllers
                     var resultAPI = responseTask.Result;
                     if (resultAPI.IsSuccessStatusCode)
                     {
-                        var readTask = resultAPI.Content.ReadAsAsync<ML.Pokemon>();
-                        pokemon.Pokemons.Add(readTask.Result);
+                        var readTask = resultAPI.Content.ReadAsAsync<dynamic>();
                         readTask.Wait();
 
+                        ML.Pokemon pokemonItemList = new ML.Pokemon();
+
+                        pokemonItemList.Name = readTask.Result.name;
+                        pokemonItemList.Id = readTask.Result.id;
+                        pokemonItemList.Sprites = new ML.Sprites();
+                        pokemonItemList.Sprites.front_default = readTask.Result.sprites.other.home.front_default;
+                        resultPokemons.Objects.Add(pokemonItemList);
                     }
                 }  
             }
+               ML.Pokemon pokemon = new ML.Pokemon();
+                pokemon.Pokemons = resultPokemons.Objects;
                 return View(pokemon);
             }
             else
             {
-                ML.Pokemon pokemon = new ML.Pokemon();
-                pokemon.Pokemons = new List<object>();
+                ML.Result resultPokemons = new ML.Result();
+                resultPokemons.Objects = new List<object>();
 
                     
                     using (var client = new HttpClient())
@@ -44,9 +52,16 @@ namespace Pokedex.Controllers
                         var resultAPI = responseTask.Result;
                         if (resultAPI.IsSuccessStatusCode)
                         {
-                            var readTask = resultAPI.Content.ReadAsAsync<ML.Pokemon>();
-                            readTask.Wait();
-                            pokemon.Pokemons.Add(readTask.Result);
+                        var readTask = resultAPI.Content.ReadAsAsync<dynamic>();
+                        readTask.Wait();
+
+                        ML.Pokemon pokemonItemList = new ML.Pokemon();
+
+                        pokemonItemList.Name = readTask.Result.name;
+                        pokemonItemList.Id = readTask.Result.id;
+                        pokemonItemList.Sprites = new ML.Sprites();
+                        pokemonItemList.Sprites.front_default = readTask.Result.sprites.other.home.front_default;
+                        resultPokemons.Objects.Add(pokemonItemList);
 
 
 
@@ -57,18 +72,19 @@ namespace Pokedex.Controllers
                         }
                     }
 
+                ML.Pokemon pokemon = new ML.Pokemon();
+                pokemon.Pokemons = resultPokemons.Objects;
                 return View(pokemon);
             }
             
         }
         public IActionResult VistaDetalle(string Name)
         {
-            ML.Pokemon pokemon = new ML.Pokemon();
-            pokemon.Pokemons = new List<object>();
-            pokemon.stats = new List<object>();
-            pokemon.types = new List<object>();
-            
+            ML.Result resultPokemons = new ML.Result();
+            resultPokemons.Objects = new List<object>();
 
+           
+            
 
             using (var client = new HttpClient())
             {
@@ -81,21 +97,35 @@ namespace Pokedex.Controllers
                 {
                     var readTask = resultAPI.Content.ReadAsAsync<dynamic>();
                     readTask.Wait();
-                    foreach (dynamic resultItem in readTask.Result.drinks)
+
+                    ML.Pokemon pokemonItemList = new ML.Pokemon();
+
+                    pokemonItemList.Name = readTask.Result.name;
+                    pokemonItemList.Id = readTask.Result.id;
+                    pokemonItemList.Sprites = new ML.Sprites();
+                    pokemonItemList.Sprites.front_default = readTask.Result.sprites.other.home.front_default;
+                    pokemonItemList.stats = new ML.stats();
+                    pokemonItemList.stats.Stats = new List<object>();
+                    foreach (dynamic item in readTask.Result.stats)
                     {
-                        //ML.Coctel resultItemList = Newtonsoft.Json.JsonConvert.DeserializeObject<ML.Coctel>(resultItem);
-                        ML.Coctel resultItemList = new ML.Coctel();
-                        resultItemList.strDrink = resultItem.strDrink;
-                        resultcoctel.Objects.Add(resultItemList);
+                        ML.stats statsItemList = new ML.stats();
+
+                        statsItemList.base_stat = item.base_stat;
+                        statsItemList.name = item.stat.name;
+                        pokemonItemList.stats.Stats.Add(statsItemList);
                     }
 
+                    resultPokemons.Objects.Add(pokemonItemList);
+                    
                 }
                 else
                 {
 
                 }
             }
-            return PartialView(pokemon);
+           ML.Pokemon pokemon = new ML.Pokemon();
+           pokemon.Pokemons = resultPokemons.Objects;
+           return PartialView(pokemon);
         }
     }
 }
