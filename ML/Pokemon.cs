@@ -30,6 +30,8 @@
     {
         public int  slot { get; set; }
         public type type { get; set; }
+        public string name { get; set; }
+        public List<object> Types { get; set; }
     }
     public class type
     {

@@ -106,6 +106,8 @@ namespace Pokedex.Controllers
                     pokemonItemList.Sprites.front_default = readTask.Result.sprites.other.home.front_default;
                     pokemonItemList.stats = new ML.stats();
                     pokemonItemList.stats.Stats = new List<object>();
+                    pokemonItemList.types = new ML.types();
+                    pokemonItemList.types.Types = new List<object>();
                     foreach (dynamic item in readTask.Result.stats)
                     {
                         ML.stats statsItemList = new ML.stats();
@@ -113,6 +115,14 @@ namespace Pokedex.Controllers
                         statsItemList.base_stat = item.base_stat;
                         statsItemList.name = item.stat.name;
                         pokemonItemList.stats.Stats.Add(statsItemList);
+                    }
+                    foreach(dynamic item in readTask.Result.types)
+                    {
+                        ML.types typesItemList = new ML.types();
+
+                        typesItemList.slot = item.slot;
+                        typesItemList.name = item.type.name;
+                        pokemonItemList.types.Types.Add(typesItemList);
                     }
 
                     resultPokemons.Objects.Add(pokemonItemList);

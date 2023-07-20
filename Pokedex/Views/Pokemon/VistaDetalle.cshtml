@@ -1,4 +1,9 @@
 ﻿@model ML.Pokemon
+<head>
+   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="~/js/site.js"></script>
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> 
+</head>
 <div class="modal fade" id="ModalUpdate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -9,19 +14,32 @@
 
                         <div class="modal-body">
                             <form>
-                                @foreach (ML.Pokemon pokemon in Model.stats.Stats){
+                                @foreach (ML.Pokemon pokemon in Model.Pokemons){
                                 <div class="form-group">
                                      <img class="card-img-top bg-opacity-75" id="Img" src="@pokemon.Sprites.front_default"alt="Card image cap" />
                                 </div>
                                 <div class="form-group">
-                                    <p class="card-text">'#00+@pokemon.Id'</p> 
-                                    <p>@pokemon.stats.base_stat</p>
-                                    <p>@pokemon.stats.name</p>
+                                    <p class="card-text">No.Pokemon:@pokemon.Id</p> 
+                                    <p>Nombre: @pokemon.Name</p>
+                                    <p>Habilidades</p>
+                                   
+                            @foreach (ML.stats stats in pokemon.stats.Stats)
+                            {
+                                <div>
+                                
+                                <p>@stats.name: @stats.base_stat</p>
+                                </div>
+                            }
+                            <h5>Tipo:</h5>
+                            @foreach(ML.types types in pokemon.types.Types)
+                            {
+                                <p class="btn btn-sm @types.name">@types.name</p>
+                            }
                         </div>
                        
                                  
                     }
-                    }
+                    
                             </form>
                         </div>
 
