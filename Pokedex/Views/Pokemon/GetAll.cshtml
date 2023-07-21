@@ -15,33 +15,35 @@
     <section>
         
         <div>
-
-          <nav class="nav">
+            @using(Html.BeginForm("GetAll","Pokemon", FormMethod.Get, new {enctype = "multipart/form-data" }))
+            {    
+            <nav class="nav">
               <ul class="nav-list">
-                  <li class="nav-item"><button class="btn btn-sm todos" id="Ver-Todos"> Ver Todos</button></li>
-                  <li class="nav-item"><button class="btn btn-sm normal" id="normal"> Normal </button></li>
-                  <li class="nav-item"><button class="btn btn-sm fighting" id="fighting"> Fighting </button></li>
-                  <li class="nav-item"><button class="btn btn-sm flying" id="flying"> Flying </button></li>
-                  <li class="nav-item"><button class="btn btn-sm poison" id="poison"> poison </button></li>
-                  <li class="nav-item"><button class="btn btn-sm ground" id="ground"> ground </button></li>
-                  <li class="nav-item"><button class="btn btn-sm rock" id="rock"> rock </button></li>
-                  <li class="nav-item"><button class="btn btn-sm bug" id="bug"> bug </button></li>
-                  <li class="nav-item"><button class="btn btn-sm ghost" id="ghost"> ghost </button></li>
-                  <li class="nav-item"><button class="btn btn-sm steel" id="steel"> steel </button></li>
-                  <li class="nav-item"><button class="btn btn-sm fire" id="fire"> Fire </button></li>
-                  <li class="nav-item"><button class="btn btn-sm water" id="water"> water </button></li>
-                  <li class="nav-item"><button class="btn btn-sm grass" id="grass"> grass </button></li>
-                  <li class="nav-item"><button class="btn btn-sm electric" id="electric"> electric </button></li>
-                  <li class="nav-item"><button class="btn btn-sm psychic" id="psychic"> psychic </button></li>
-                  <li class="nav-item"><button class="btn btn-sm ice" id="ice"> ice </button></li>
-                  <li class="nav-item"><button class="btn btn-sm dragon" id="dragon"> dragon </button></li>
-                  <li class="nav-item"><button class="btn btn-sm dark" id="dark"> dark </button></li>
-                  <li class="nav-item"><button class="btn btn-sm fairy" id="fairy"> fairy </button></li>       
+                  <li class="nav-item"><button class="btn btn-sm todos" name="tipo" value=" " id="Ver-Todos"> Ver Todos</button></li>
+                  <li class="nav-item"><button class="btn btn-sm normal" name="tipo" value="normal" id="normal"> Normal </button></li>
+                  <li class="nav-item"><button class="btn btn-sm fighting" name="tipo" value="fighting" id="fighting"> Fighting </button></li>
+                  <li class="nav-item"><button class="btn btn-sm flying" name="tipo" value="flying" id="flying"> Flying </button></li>
+                  <li class="nav-item"><button class="btn btn-sm poison" name="tipo" value="poison" id="poison"> poison </button></li>
+                  <li class="nav-item"><button class="btn btn-sm ground" name="tipo" value="ground" id="ground"> ground </button></li>
+                  <li class="nav-item"><button class="btn btn-sm rock" name="tipo" value="rock" id="rock"> rock </button></li>
+                  <li class="nav-item"><button class="btn btn-sm bug" name="tipo" value="bug" id="bug"> bug </button></li>
+                  <li class="nav-item"><button class="btn btn-sm ghost" name="tipo" value="ghost" id="ghost"> ghost </button></li>
+                  <li class="nav-item"><button class="btn btn-sm steel" name="tipo" value="steel" id="steel"> steel </button></li>
+                  <li class="nav-item"><button class="btn btn-sm fire" name="tipo" value="fire" id="fire"> Fire </button></li>
+                  <li class="nav-item"><button class="btn btn-sm water" name="tipo" value="water" id="water"> water </button></li>
+                  <li class="nav-item"><button class="btn btn-sm grass" name="tipo" value="grass" id="grass"> grass </button></li>
+                  <li class="nav-item"><button class="btn btn-sm electric" name="tipo" value="electric" id="electric"> electric </button></li>
+                  <li class="nav-item"><button class="btn btn-sm psychic" name="tipo" value="psychic" id="psychic"> psychic </button></li>
+                  <li class="nav-item"><button class="btn btn-sm ice" name="tipo" value="ice" id="ice"> ice </button></li>
+                  <li class="nav-item"><button class="btn btn-sm dragon" name="tipo" value="dragon" id="dragon"> dragon </button></li>
+                  <li class="nav-item"><button class="btn btn-sm dark" name="tipo" value="dark" id="dark"> dark </button></li>
+                  <li class="nav-item"><button class="btn btn-sm fairy" name="tipo" value="fairy" id="fairy"> fairy </button></li>       
               
               
               </ul>
 
           </nav>
+          }
            @using (Html.BeginForm("GetAll", "Pokemon", FormMethod.Get, new { enctype = "multipart/form-data" }))
              {
           <input class="form-control" style="width: 300px;float:right; margin-right: 3%;" name="Nombre" placeholder="Nombre o ID" value="" autocomplete="off" />
@@ -77,12 +79,12 @@
                      }
                     <div class="card-body">
                        <h5 class="card-title text-center">@pokemon.Name</h5>
-                       <p class="card-text">'#00+@pokemon.Id'</p> 
+                       <p class="card-text">"00"@pokemon.Id</p> 
                        
 
                        
                      
-                       <a href="@Url.Action("VistaDetalle", "Pokemon", new { Name = pokemon.Name})" class="btn btn-primary" onclick="AbrirModal()">Detalle</a>
+                       <a href="@Url.Action("GetAll", "Pokemon", new { Name = pokemon.Name})"   class="btn btn-primary">Detalle</a>
                     </div>
                   </div>
                   </div>
