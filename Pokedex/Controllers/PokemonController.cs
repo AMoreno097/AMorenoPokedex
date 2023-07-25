@@ -8,16 +8,16 @@ namespace Pokedex.Controllers
     {
         public IActionResult GetAll(string Nombre, string tipo)
         {
-            string Url = "https://pokeapi.co/api/v2/pokemon/";
-            if ( Nombre == null && tipo== null ) {
+            if (Nombre == null && tipo == null)
+            {     
                 ML.Result resultPokemons = new ML.Result();
                 resultPokemons.Objects = new List<object>();
-            for (int i = 1; i <= 20; i++) { 
-                string num = i.ToString();
+             
                 using (var client = new HttpClient())
                 {
+                    string Url = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=20";
                     client.BaseAddress = new Uri(Url);
-                    var responseTask = client.GetAsync(num);
+                    var responseTask = client.GetAsync("");
                     responseTask.Wait();
                     var resultAPI = responseTask.Result;
                     if (resultAPI.IsSuccessStatusCode)
@@ -26,16 +26,42 @@ namespace Pokedex.Controllers
                         readTask.Wait();
 
                         ML.Pokemon pokemonItemList = new ML.Pokemon();
+                        pokemonItemList.Pokemons = new List<object>();
+                        
+                        foreach (dynamic item in readTask.Result.results)
+                        {
+                            string Nombre1 = item.name;
 
-                        pokemonItemList.Name = readTask.Result.name;
-                        pokemonItemList.Id = readTask.Result.id;
-                        pokemonItemList.Sprites = new ML.Sprites();
-                        pokemonItemList.Sprites.front_default = readTask.Result.sprites.other["official-artwork"].front_default;
-                        resultPokemons.Objects.Add(pokemonItemList);
+                            using (var cliente = new HttpClient())
+                            {
+                                cliente.BaseAddress = new Uri("https://pokeapi.co/api/v2/pokemon/");
+                                var responsetask = cliente.GetAsync(Nombre1);
+                                responsetask.Wait();
+                                var resultapi = responsetask.Result;
+                                if (resultapi.IsSuccessStatusCode)
+                                {
+                                    var readtask = resultapi.Content.ReadAsAsync<dynamic>();
+                                    readtask.Wait();
+                                    ML.Pokemon pokemonItem = new ML.Pokemon();
+                                    pokemonItem.Name = readtask.Result.name;
+                                    pokemonItem.Id = readtask.Result.id;
+                                    pokemonItem.Sprites = new ML.Sprites();
+                                    pokemonItem.Sprites.front_default = readtask.Result.sprites.other["official-artwork"].front_default;
+                                    pokemonItemList.next = readTask.Result.next;
+                                    pokemonItemList.previous = readTask.Result.previous;
+                                    resultPokemons.Objects.Add(pokemonItemList);
+                                }
+                                else
+                                {
+
+                                }
+                               
+                            }
+                            
+                        }
                     }
                 }  
-            }
-               ML.Pokemon pokemon = new ML.Pokemon();
+                ML.Pokemon pokemon = new ML.Pokemon();
                 pokemon.Pokemons = resultPokemons.Objects;
                 return View(pokemon);
             }
@@ -163,6 +189,7 @@ namespace Pokedex.Controllers
                     pokemonItemList.Id = readTask.Result.id;
                     pokemonItemList.Sprites = new ML.Sprites();
                     pokemonItemList.Sprites.front_default = readTask.Result.sprites.other["official-artwork"].front_default;
+                    pokemonItemList.Sprites.front_shiny = readTask.Result.sprites.other["official-artwork"].front_shiny;
                     pokemonItemList.stats = new ML.stats();
                     pokemonItemList.stats.Stats = new List<object>();
                     pokemonItemList.types = new ML.types();
@@ -194,7 +221,7 @@ namespace Pokedex.Controllers
             }
            ML.Pokemon pokemon = new ML.Pokemon();
            pokemon.Pokemons = resultPokemons.Objects;
-           return View(pokemon);
+           return PartialView(pokemon);
         }
     }
 }

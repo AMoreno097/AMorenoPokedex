@@ -78,20 +78,16 @@
                         <img class="card-img-top bg-opacity-75" id="Img" src="@pokemon.Sprites.front_default"alt="Card image cap" />
                      }
                     <div class="card-body">
-                       <h5 class="card-title text-center">@pokemon.Name</h5>
-                       <p class="card-text">"00"@pokemon.Id</p> 
-                       
-
-                       
-                     
-                       <a href="@Url.Action("GetAll", "Pokemon", new { Name = pokemon.Name})"   class="btn btn-primary">Detalle</a>
+                       <h5 class="card-title text-center">@pokemon.Name</h5>                                
+                       <a href="@Url.Action("VistaDetalle", "Pokemon", new { Name = pokemon.Name})" onclick="AbrirModal()"  class="btn btn-primary">Detalle</a>
                     </div>
                   </div>
                   </div>
+                  <a href="@Url.Action("GetAll", "Pokemon", new { Name = pokemon.next})" class="btn btn-primary"><i class="bi bi-arrow-left-circle-fill"></i></a>
+                  <a href="@Url.Action("GetAll", "Pokemon", new { Name = pokemon.previous})" class="btn btn-primary "><i class="bi bi-arrow-left-circle-fill"></i></a>
                }
             </div>
+
         }
     </section>
 </div>
-          
-

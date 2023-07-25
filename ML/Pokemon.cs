@@ -8,6 +8,9 @@
         public List<object> Pokemons { get; set; }
         public stats stats { get; set; }
         public types types { get; set; }
+        public string next { get; set; }
+        public string previous { get; set; }
+        public string url { get; set; }
     }
     public class Sprites
     {

@@ -1,76 +1,48 @@
 ﻿@model ML.Pokemon
-@{
-    ViewData["Title"] = "VistaDetalle";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-  <div class="modal" tabindex="-1" role="dialog" id="modalPromociones">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Ingresa Nuevo Dependiente</h4>
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-                </div>
-
-                <!-- Modal body -->
-                <div class="modal-body">
-
-                    @using (Html.BeginForm("FormDependiente", "Empleado", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                    {
-                        //Nombres y Apellidos
-                        <div class="row">
-                            <div>
-                                @Html.LabelFor(model => model.IdDependiente, new { @class = "visually-hidden" })
-
-                                @Html.TextBoxFor(model => model.IdDependiente, new { @class = "visually-hidden form-control" })
-
-                                @Html.ValidationMessageFor(model => model.IdDependiente)
-
-                            </div>
-
-                            <div class="col-md-4">
-                                @Html.LabelFor(model => model.Nombre)
-
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fa-solid fa-user-pen" style="color: #000000;"></i></span>
-                                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @id = "txtNombre", @onkeypress = "SoloLetras(event,'txtNombre','lblNombre')",@autocomplete = "off"})
-
-                                    @Html.ValidationMessageFor(model => model.Nombre)
-
-                                    @Html.Label(null, "", new{@id="lblNombre"})
-                                </div>
-
-
-                            </div>
-
-                            <div class="col-md-4">
-                                @Html.LabelFor(model => model.ApellidoPaterno)
-
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fa-solid fa-user-pen" style="color: #000000;"></i></span>
-                                    @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno" ,@onkeypress = "SoloLetras(event,'txtApellidoPaterno','lblApellidoPaterno')",@autocomplete = "off"})
-
-                                    @Html.ValidationMessageFor(model => model.ApellidoPaterno)
-                                    @Html.Label(null, "", new {@id="lblApellidoPaterno"})
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-4">
-                                @Html.LabelFor(model => model.ApellidoMaterno)
-
-                                <div class="input-group">
-
-                                    <span class="input-group-text"><i class="fa-solid fa-user-pen" style="color: #000000;"></i></span>
-                                    @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno" ,@onkeypress = "SoloLetras(event,'txtApellidoMaterno','lblApellidoMaterno')" ,@autocomplete = "off"})
-
-                                    @Html.ValidationMessageFor(model => model.ApellidoMaterno)
-                                    @Html.Label(null, "", new{@id="lblApellidoMaterno"})
-
-                                </div>
-
-                            </div>
-
+<head>
+   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="~/js/site.js"></script>
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> 
+</head>
+<div class="modal fade" id="ModalUpdate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h4 class="modal-title" id="ModalEmpleado">Pokemon Detalle</h4>
                         </div>
 
+                        <div class="modal-body">
+                            <form>
+                                @foreach (ML.Pokemon pokemon in Model.Pokemons){
+                                <div class="form-group">
+                                     <img class="card-img-top bg-opacity-75" id="Img" src="@pokemon.Sprites.front_default"alt="Card image cap" />
+                                     <img class="card-img-top bg-opacity-75" id="Img" src="@pokemon.Sprites.front_shiny"alt="Card image cap" />
+                                </div>
+                                <div class="form-group">
+                                    <p class="card-text">No.Pokemon:@pokemon.Id</p> 
+                                    <p>Nombre: @pokemon.Name</p>
+                                    <p>Habilidades</p>
+
+                            @foreach (ML.stats stats in pokemon.stats.Stats)
+                            {
+                                <div>
+
+                                <p>@stats.name: @stats.base_stat</p>
+                                </div>
+                            }
+                            <h5>Tipo:</h5>
+                            @foreach(ML.types types in pokemon.types.Types)
+                            {
+                                <p class="btn btn-sm @types.name">@types.name</p>
+                            }
+                        </div>
+
+
+                    }
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+</div>
